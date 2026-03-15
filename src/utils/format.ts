@@ -1,4 +1,6 @@
-import type { AnnictWork, AnnictSeries, AnnictEpisode } from "@/types/index.js";
+import type { AnnictWork } from "@/types/works.js";
+import type { AnnictSeries } from "@/types/series.js";
+import type { AnnictEpisode } from "@/types/episodes.js";
 
 /** 配列を「全 N 件中 M 件を表示」形式のテキストに整形する（0 件の場合は emptyMsg） */
 const listToText = <T>(items: T[], total: number, format: (x: T) => string, emptyMsg: string): string => {

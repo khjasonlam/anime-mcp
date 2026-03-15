@@ -1,10 +1,14 @@
 import "dotenv/config";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { registerTools } from "@/tools/index.js";
+import { registerWorksTools } from "@/tools/works.js";
+import { registerSeriesTools } from "@/tools/series.js";
+import { registerEpisodesTools } from "@/tools/episodes.js";
 
 const server = new McpServer({ name: "anime-mcp", version: "1.0.0" });
-registerTools(server);
+registerWorksTools(server);
+registerSeriesTools(server);
+registerEpisodesTools(server);
 
 /** MCP サーバーを stdio で起動する */
 async function main() {

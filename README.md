@@ -74,14 +74,20 @@ MCP サーバーとして登録します。
 
 ```
 src/
-├── api/annict.ts    # Annict API (works / series / episodes)
+├── api/             # Annict API (works / series / episodes)
+│   ├── client.ts    # 共通 get / buildParams
+│   ├── works.ts
+│   ├── series.ts
+│   └── episodes.ts
 ├── config.ts        # 環境変数・定数
 ├── index.ts         # エントリ (MCP サーバー起動)
 ├── types/
-│   ├── index.ts     # レスポンス型・Zod ツールスキーマ
-│   └── api.ts       # リクエスト用型
+│   ├── api.ts       # リクエスト用型 (Fetch*Params)
+│   ├── common.ts    # 共通 Zod (PER_PAGE, IDS, SeasonName 等)
+│   ├── works.ts
+│   ├── series.ts
+│   └── episodes.ts
 ├── tools/           # MCP ツール登録
-│   ├── index.ts
 │   ├── works.ts     # 作品ツール
 │   ├── series.ts    # シリーズツール
 │   └── episodes.ts  # エピソードツール
