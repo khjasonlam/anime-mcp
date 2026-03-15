@@ -1,6 +1,18 @@
-import type { AnnictWork } from "../types.js";
+import type { AnnictWork, AnnictSeries } from "../types.js";
 
-export function formatWork(w: AnnictWork): string {
+const listToText = <T>(
+  items: T[],
+  total: number,
+  format: (x: T) => string,
+  emptyMsg: string
+): string => {
+  if (items.length === 0) return emptyMsg;
+  const header = `全 ${total} 件中 ${items.length} 件を表示:\n`;
+  const body = items.map((x, i) => `${i + 1}. ${format(x)}`).join("\n\n");
+  return header + body;
+};
+
+export const formatWork = (w: AnnictWork): string => {
   const lines = [
     `【${w.title}】${w.title_kana ? ` (${w.title_kana})` : ""}`,
     `ID: ${w.id} | ${w.media_text} | ${w.season_name_text ?? "-"} | 話数: ${w.episodes_count ?? "-"} | ウォッチャー: ${w.watchers_count ?? "-"}`,
@@ -9,13 +21,15 @@ export function formatWork(w: AnnictWork): string {
     ...(w.images?.recommended_url ? [`画像: ${w.images.recommended_url}`] : []),
   ];
   return lines.filter(Boolean).join("\n");
-}
+};
 
-export function worksToText(works: AnnictWork[], totalCount: number): string {
-  if (works.length === 0) {
-    return "該当する作品はありませんでした。";
-  }
-  const header = `全 ${totalCount} 件中 ${works.length} 件を表示:\n`;
-  const body = works.map((w, i) => `${i + 1}. ${formatWork(w)}`).join("\n\n");
-  return header + body;
-}
+export const worksToText = (works: AnnictWork[], totalCount: number): string =>
+  listToText(works, totalCount, formatWork, "該当する作品はありませんでした。");
+
+export const formatSeries = (s: AnnictSeries): string => {
+  const parts = [`【${s.name}】`, s.name_ro && ` (${s.name_ro})`, s.name_en && ` / ${s.name_en}`, ` | ID: ${s.id}`];
+  return parts.filter(Boolean).join("");
+};
+
+export const seriesToText = (series: AnnictSeries[], totalCount: number): string =>
+  listToText(series, totalCount, formatSeries, "該当するシリーズはありませんでした。");
