@@ -1,6 +1,7 @@
 {
   "name": "anime-mcp",
   "version": "1.0.0",
+  "private": true,
   "description": "MCP server for anime search using Annict REST API",
   "type": "module",
   "main": "build/index.js",
@@ -8,21 +9,30 @@
     "anime-mcp": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc && chmod 755 build/index.js",
+    "build": "tsc && tsc-alias -p tsconfig.json && chmod 755 build/index.js",
     "start": "node build/index.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\""
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
-  "keywords": ["mcp", "annict", "anime"],
-  "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
+    "dotenv": "^17.3.1",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0"
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.57.0"
   }
 }
