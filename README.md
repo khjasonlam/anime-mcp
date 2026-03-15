@@ -82,7 +82,7 @@ MCP サーバーとして登録します。
   "mcpServers": {
     "anime": {
       "command": "node",
-      "args": ["/ABSOLUTE/PATH/TO/anime-mcp/build/index.js"],
+      "args": ["/ABSOLUTE/PATH/TO/anime-mcp/build/src/index.js"],
       "env": {
         "ANNICT_ACCESS_TOKEN": "your_annict_token"
       }
@@ -95,11 +95,12 @@ MCP サーバーとして登録します。
 
 ## プロジェクト構成
 
-- **api/** — Annict API クライアント（`client.ts` + works, series, episodes, people, organizations, staffs, programs）
-- **types/** — リクエスト型（`api.ts`, `common.ts`）と各リソースの型・Zod スキーマ
-- **tools/** — MCP ツール登録（リソースごと 1 ファイル）
-- **utils/format/** — リソース別テキスト整形（`common.ts` + 各リソース）
-- **utils/result.ts** — ツール返却（ok / err / wrap）
+- **src/api/** — Annict API クライアント（`client.ts` + works, series, episodes, people, organizations, staffs, programs）
+- **src/types/** — リクエスト型（`api.ts`, `common.ts`）と各リソースの型・Zod スキーマ
+- **src/tools/** — MCP ツール登録（リソースごと 1 ファイル）
+- **src/utils/format/** — リソース別テキスト整形（`common.ts` + 各リソース）
+- **src/utils/result.ts** — ツール返却（ok / err / wrap）
+- **test/** — ユニットテスト（Vitest）。`test/api/`, `test/utils/`, `test/tools/` で src と対応
 
 ## 開発
 
@@ -107,6 +108,7 @@ MCP サーバーとして登録します。
 npm run build        # ビルド (tsc + tsc-alias)
 npm start            # ビルド済み index.js を実行
 npm run dev          # tsc --watch
+npm test             # ユニットテスト実行 (Vitest)
 npm run lint         # ESLint
 npm run lint:fix     # ESLint 自動修正
 npm run format       # Prettier でフォーマット
