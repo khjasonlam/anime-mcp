@@ -1,7 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchSeries } from "@/api/series.js";
 import { SearchSeriesInputSchema, GetSeriesByIdsInputSchema } from "@/types/series.js";
-import { seriesToText } from "@/utils/format.js";
+import { seriesToText } from "@/utils/format/series.js";
 import { wrap } from "@/utils/result.js";
 
 /** シリーズ検索用の MCP ツール（search_series, get_series_by_ids）を登録する */

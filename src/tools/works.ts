@@ -5,7 +5,7 @@ import {
   SearchAnimeBySeasonInputSchema,
   GetAnimeByIdsInputSchema,
 } from "@/types/works.js";
-import { worksToText } from "@/utils/format.js";
+import { worksToText } from "@/utils/format/works.js";
 import { wrap } from "@/utils/result.js";
 
 /** 作品検索用の MCP ツール（search_anime, search_anime_by_season, get_anime_by_ids）を登録する */

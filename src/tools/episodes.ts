@@ -4,7 +4,7 @@ import {
   GetEpisodesByWorkIdInputSchema,
   GetEpisodesByIdsInputSchema,
 } from "@/types/episodes.js";
-import { episodesToText } from "@/utils/format.js";
+import { episodesToText } from "@/utils/format/episodes.js";
 import { wrap } from "@/utils/result.js";
 
 /** エピソード取得用の MCP ツール（get_episodes_by_work_id, get_episodes_by_ids）を登録する */
