@@ -1,6 +1,6 @@
-import { getAnnictAccessToken, ANNICT_API_BASE } from "../config.js";
-import type { ApiParams, FetchWorksParams, FetchSeriesParams } from "../types/api.js";
-import type { AnnictWorksResponse, AnnictSeriesResponse } from "../types/index.js";
+import { getAnnictAccessToken, ANNICT_API_BASE } from "@/config.js";
+import type { ApiParams, FetchWorksParams, FetchSeriesParams } from "@/types/api.js";
+import type { AnnictWorksResponse, AnnictSeriesResponse } from "@/types/index.js";
 
 const buildParams = (params: ApiParams): URLSearchParams => {
   const search = new URLSearchParams();
@@ -12,8 +12,14 @@ const buildParams = (params: ApiParams): URLSearchParams => {
 };
 
 const get = async <T>(path: string, params: ApiParams = {}): Promise<T> => {
-  const search = buildParams({ access_token: getAnnictAccessToken(), per_page: 25, ...params });
-  const res = await fetch(`${ANNICT_API_BASE}/${path}?${search}`, { headers: { Accept: "application/json" } });
+  const search = buildParams({
+    access_token: getAnnictAccessToken(),
+    per_page: 25,
+    ...params,
+  });
+  const res = await fetch(`${ANNICT_API_BASE}/${path}?${search}`, {
+    headers: { Accept: "application/json" },
+  });
   if (!res.ok) throw new Error(`Annict API error ${res.status}: ${await res.text()}`);
   return res.json() as Promise<T>;
 };

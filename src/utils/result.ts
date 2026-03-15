@@ -1,8 +1,13 @@
 /**
  * MCP tool result helpers
  */
-export const ok = (text: string) => ({ content: [{ type: "text" as const, text }] });
-export const err = (msg: string) => ({ content: [{ type: "text" as const, text: msg }], isError: true });
+export const ok = (text: string) => ({
+  content: [{ type: "text" as const, text }],
+});
+export const err = (msg: string) => ({
+  content: [{ type: "text" as const, text: msg }],
+  isError: true,
+});
 
 export const wrap = async (run: () => Promise<string>, errPrefix: string) => {
   try {
