@@ -1,7 +1,25 @@
 import { getAnnictAccessToken, ANNICT_API_BASE } from "../config.js";
-import type { AnnictWorksResponse } from "../types.js";
+import type { AnnictWorksResponse, AnnictSeriesResponse } from "../types.js";
 
-export interface FetchWorksParams {
+type ApiParams = Record<string, string | number | number[] | string[] | undefined>;
+
+const buildParams = (params: ApiParams): URLSearchParams => {
+  const search = new URLSearchParams();
+  for (const [key, val] of Object.entries(params)) {
+    if (val === undefined) continue;
+    search.set(key, Array.isArray(val) ? val.join(",") : String(val));
+  }
+  return search;
+};
+
+const get = async <T>(path: string, params: ApiParams = {}): Promise<T> => {
+  const search = buildParams({ access_token: getAnnictAccessToken(), per_page: 25, ...params });
+  const res = await fetch(`${ANNICT_API_BASE}/${path}?${search}`, { headers: { Accept: "application/json" } });
+  if (!res.ok) throw new Error(`Annict API error ${res.status}: ${await res.text()}`);
+  return res.json() as Promise<T>;
+};
+
+export interface FetchWorksParams extends ApiParams {
   filter_title?: string;
   filter_season?: string;
   filter_ids?: number[];
@@ -13,61 +31,22 @@ export interface FetchWorksParams {
   fields?: string[];
 }
 
-export async function fetchWorks(
-  params: FetchWorksParams = {}
-): Promise<AnnictWorksResponse> {
-  const token = getAnnictAccessToken();
-  const searchParams = new URLSearchParams({
-    access_token: token,
-    per_page: String(params.per_page ?? 25),
-  });
+export const fetchWorks = (params: FetchWorksParams = {}): Promise<AnnictWorksResponse> =>
+  get<AnnictWorksResponse>("works", params);
 
-  if (params.filter_title) {
-    searchParams.set("filter_title", params.filter_title);
-  }
-  if (params.filter_season) {
-    searchParams.set("filter_season", params.filter_season);
-  }
-  if (params.filter_ids?.length) {
-    searchParams.set("filter_ids", params.filter_ids.join(","));
-  }
-  if (params.page) {
-    searchParams.set("page", String(params.page));
-  }
-  if (params.sort_id) {
-    searchParams.set("sort_id", params.sort_id);
-  }
-  if (params.sort_season) {
-    searchParams.set("sort_season", params.sort_season);
-  }
-  if (params.sort_watchers_count) {
-    searchParams.set("sort_watchers_count", params.sort_watchers_count);
-  }
-  if (params.fields?.length) {
-    searchParams.set("fields", params.fields.join(","));
-  }
-
-  const url = `${ANNICT_API_BASE}/works?${searchParams.toString()}`;
-  const res = await fetch(url, {
-    headers: { Accept: "application/json" },
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Annict API error ${res.status}: ${text}`);
-  }
-
-  return (await res.json()) as AnnictWorksResponse;
+export interface FetchSeriesParams extends ApiParams {
+  filter_ids?: number[];
+  filter_name?: string;
+  page?: number;
+  per_page?: number;
+  sort_id?: "asc" | "desc";
+  fields?: string[];
 }
 
-/**
- * Build season filter string. e.g. 2016-spring, 2024-all
- */
-export function seasonParam(year: number, season: string): string {
+export const fetchSeries = (params: FetchSeriesParams = {}): Promise<AnnictSeriesResponse> =>
+  get<AnnictSeriesResponse>("series", params);
+
+export const seasonParam = (year: number, season: string): string => {
   const s = season.toLowerCase();
-  if (s === "all") return `${year}-all`;
-  if (["spring", "summer", "autumn", "winter"].includes(s)) {
-    return `${year}-${s}`;
-  }
-  return `${year}-${season}`;
-}
+  return s === "all" ? `${year}-all` : `${year}-${s}`;
+};
