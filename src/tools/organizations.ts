@@ -1,9 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchOrganizations } from "@/api/organizations.js";
-import {
-  SearchOrganizationsInputSchema,
-  GetOrganizationsByIdsInputSchema,
-} from "@/types/organizations.js";
+import { SearchOrganizationsInputSchema, GetOrganizationsByIdsInputSchema } from "@/types/organizations.js";
 import { organizationsToText } from "@/utils/format/organizations.js";
 import { wrap } from "@/utils/result.js";
 

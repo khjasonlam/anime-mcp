@@ -1,9 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchEpisodes } from "@/api/episodes.js";
-import {
-  GetEpisodesByWorkIdInputSchema,
-  GetEpisodesByIdsInputSchema,
-} from "@/types/episodes.js";
+import { GetEpisodesByWorkIdInputSchema, GetEpisodesByIdsInputSchema } from "@/types/episodes.js";
 import { episodesToText } from "@/utils/format/episodes.js";
 import { wrap } from "@/utils/result.js";
 

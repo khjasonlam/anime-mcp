@@ -1,10 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchWorks, seasonParam } from "@/api/works.js";
-import {
-  SearchAnimeInputSchema,
-  SearchAnimeBySeasonInputSchema,
-  GetAnimeByIdsInputSchema,
-} from "@/types/works.js";
+import { SearchAnimeInputSchema, SearchAnimeBySeasonInputSchema, GetAnimeByIdsInputSchema } from "@/types/works.js";
 import { worksToText } from "@/utils/format/works.js";
 import { wrap } from "@/utils/result.js";
 

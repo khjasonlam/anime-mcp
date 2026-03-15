@@ -31,24 +31,11 @@ export interface AnnictProgramsResponse {
 export const GetMyProgramsInputSchema = z.object({
   per_page: PER_PAGE,
   page: PAGE,
-  filter_work_ids: z
-    .array(z.number().int().positive())
-    .optional()
-    .describe("Filter by work IDs"),
-  filter_started_at_gt: z
-    .string()
-    .optional()
-    .describe("UTC datetime, e.g. 2016/05/06 21:10 (programs after this)"),
-  filter_started_at_lt: z
-    .string()
-    .optional()
-    .describe("UTC datetime, e.g. 2016/05/06 21:10 (programs before this)"),
+  filter_work_ids: z.array(z.number().int().positive()).optional().describe("Filter by work IDs"),
+  filter_started_at_gt: z.string().optional().describe("UTC datetime, e.g. 2016/05/06 21:10 (programs after this)"),
+  filter_started_at_lt: z.string().optional().describe("UTC datetime, e.g. 2016/05/06 21:10 (programs before this)"),
   filter_unwatched: z.boolean().optional().describe("Only unwatched programs"),
   filter_rebroadcast: z.boolean().optional().describe("true = only rebroadcasts, false = exclude rebroadcasts"),
-  sort_started_at: z
-    .enum(["asc", "desc"])
-    .optional()
-    .default("desc")
-    .describe("Sort by started_at"),
+  sort_started_at: z.enum(["asc", "desc"]).optional().default("desc").describe("Sort by started_at"),
 });
 export type GetMyProgramsInput = z.infer<typeof GetMyProgramsInputSchema>;

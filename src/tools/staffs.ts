@@ -1,9 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchStaffs } from "@/api/staffs.js";
-import {
-  GetStaffsByIdsInputSchema,
-  GetStaffsByWorkIdInputSchema,
-} from "@/types/staffs.js";
+import { GetStaffsByIdsInputSchema, GetStaffsByWorkIdInputSchema } from "@/types/staffs.js";
 import { staffsToText } from "@/utils/format/staffs.js";
 import { wrap } from "@/utils/result.js";
 

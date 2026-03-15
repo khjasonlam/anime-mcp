@@ -7,12 +7,7 @@ export const formatProgram = (p: AnnictProgram): string => {
   const ep = p.episode ? `${p.episode.number_text ?? `#${p.episode.id}`} ${p.episode.title ?? ""}`.trim() : "-";
   const ch = p.channel ? p.channel.name : "-";
   const rebroadcast = p.is_rebroadcast ? " (再)" : "";
-  const lines = [
-    `【${workTitle}】${rebroadcast}`,
-    `放送: ${p.started_at} | ${ch}`,
-    `エピソード: ${ep}`,
-    `ID: ${p.id}`,
-  ];
+  const lines = [`【${workTitle}】${rebroadcast}`, `放送: ${p.started_at} | ${ch}`, `エピソード: ${ep}`, `ID: ${p.id}`];
   return lines.join("\n");
 };
 

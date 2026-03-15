@@ -6,10 +6,7 @@
  */
 
 /** クエリ文字列組み立て用のパラメータ型（undefined は除外して付与） */
-export type ApiParams = Record<
-  string,
-  string | number | number[] | string[] | boolean | undefined
->;
+export type ApiParams = Record<string, string | number | number[] | string[] | boolean | undefined>;
 
 /** GET /v1/works のクエリパラメータ */
 export interface FetchWorksParams extends ApiParams {
