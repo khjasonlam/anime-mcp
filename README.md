@@ -1,6 +1,6 @@
 # Anime MCP Server
 
-Annict REST API（[作品](https://developers.annict.com/docs/rest-api/v1/works)・[シリーズ](https://developers.annict.com/docs/rest-api/v1/series)・[エピソード](https://developers.annict.com/docs/rest-api/v1/episodes)）を使い、アニメの検索を行う [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) サーバーです。
+Annict REST APIを使い、アニメの検索・人物・団体・スタッフ・放送予定の取得を行う [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) サーバーです。
 
 ## 必要なもの
 
@@ -12,17 +12,13 @@ Annict REST API（[作品](https://developers.annict.com/docs/rest-api/v1/works)
 ```bash
 npm install
 cp .env.example .env
-# .env に ANNICT_ACCESS_TOKEN を設定
+# .env に ANNICT_ACCESS_TOKEN **を設定**
 npm run build
 ```
 
 ## 環境変数
 
-| 変数名 | 必須 | 説明 |
-|--------|------|------|
-| `ANNICT_ACCESS_TOKEN` | ✅ | Annict API のアクセストークン。[アプリ設定](https://annict.com/settings/apps)で取得。 |
-
-起動時に `dotenv` で `.env` を読み込むため、MCP の設定で `env` を渡さずともプロジェクト直下の `.env` でトークンを指定できます。
+**`ANNICT_ACCESS_TOKEN`**（必須）— Annict API のアクセストークン。[アプリ設定](https://annict.com/settings/apps)で取得。`.env` に書くか、MCP 設定の `env` で渡す。
 
 ## 提供ツール
 
@@ -48,6 +44,33 @@ npm run build
 | `get_episodes_by_work_id` | 作品IDに紐づくエピソード一覧を取得（話数順など） |
 | `get_episodes_by_ids` | エピソードIDのリストでエピソード情報を取得 |
 
+### 人物（people）
+
+| ツール名 | 説明 |
+|----------|------|
+| `search_people` | 名前で人物を検索（声優・スタッフなど。例: 井上, 水瀬いのり） |
+| `get_people_by_ids` | 人物IDのリストで人物情報を取得 |
+
+### 団体（organizations）
+
+| ツール名 | 説明 |
+|----------|------|
+| `search_organizations` | 名前で団体を検索（制作会社など。例: 株式会社, P.A.WORKS） |
+| `get_organizations_by_ids` | 団体IDのリストで団体情報を取得 |
+
+### スタッフ（staffs）
+
+| ツール名 | 説明 |
+|----------|------|
+| `get_staffs_by_ids` | スタッフIDのリストでスタッフ情報を取得 |
+| `get_staffs_by_work_id` | 作品IDに紐づくスタッフ一覧を取得（監督・アニメーション制作など） |
+
+### 放送予定（programs）
+
+| ツール名 | 説明 |
+|----------|------|
+| `get_my_programs` | 認証ユーザーの放送予定を取得。日時範囲・作品ID・未視聴・再放送で絞り込み可能。`ANNICT_ACCESS_TOKEN` 必須。 |
+
 ## Cursor / Claude Desktop での使い方
 
 MCP サーバーとして登録します。
@@ -72,29 +95,11 @@ MCP サーバーとして登録します。
 
 ## プロジェクト構成
 
-```
-src/
-├── api/             # Annict API (works / series / episodes)
-│   ├── client.ts    # 共通 get / buildParams
-│   ├── works.ts
-│   ├── series.ts
-│   └── episodes.ts
-├── config.ts        # 環境変数・定数
-├── index.ts         # エントリ (MCP サーバー起動)
-├── types/
-│   ├── api.ts       # リクエスト用型 (Fetch*Params)
-│   ├── common.ts    # 共通 Zod (PER_PAGE, IDS, SeasonName 等)
-│   ├── works.ts
-│   ├── series.ts
-│   └── episodes.ts
-├── tools/           # MCP ツール登録
-│   ├── works.ts     # 作品ツール
-│   ├── series.ts    # シリーズツール
-│   └── episodes.ts  # エピソードツール
-└── utils/
-    ├── format.ts    # 作品・シリーズ・エピソードのテキスト整形
-    └── result.ts    # ツール返却用 (ok / err / wrap)
-```
+- **api/** — Annict API クライアント（`client.ts` + works, series, episodes, people, organizations, staffs, programs）
+- **types/** — リクエスト型（`api.ts`, `common.ts`）と各リソースの型・Zod スキーマ
+- **tools/** — MCP ツール登録（リソースごと 1 ファイル）
+- **utils/format/** — リソース別テキスト整形（`common.ts` + 各リソース）
+- **utils/result.ts** — ツール返却（ok / err / wrap）
 
 ## 開発
 
@@ -110,8 +115,5 @@ npm run format:check # フォーマットチェック
 
 ## 参考
 
-- [Annict REST API - 作品](https://developers.annict.com/docs/rest-api/v1/works)
-- [Annict REST API - シリーズ](https://developers.annict.com/docs/rest-api/v1/series)
-- [Annict REST API - エピソード](https://developers.annict.com/docs/rest-api/v1/episodes)
-- [MCP - Server concepts](https://modelcontextprotocol.io/docs/learn/server-concepts)
-- [MCP - Build a server (TypeScript)](https://modelcontextprotocol.io/docs/develop/build-server#typescript)
+- [Annict REST API](https://developers.annict.com/docs/rest-api)
+- [MCP](https://modelcontextprotocol.io/)（[Server concepts](https://modelcontextprotocol.io/docs/learn/server-concepts) / [Build a server](https://modelcontextprotocol.io/docs/develop/build-server#typescript)）
