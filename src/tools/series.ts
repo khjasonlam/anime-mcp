@@ -1,6 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { fetchSeries } from "../api/annict.js";
-import { SearchSeriesInputSchema, GetSeriesByIdsInputSchema } from "../types.js";
+import { SearchSeriesInputSchema, GetSeriesByIdsInputSchema } from "../types/index.js";
 import { seriesToText } from "../utils/format.js";
 import { wrap } from "../utils/result.js";
 

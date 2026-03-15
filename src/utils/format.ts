@@ -1,4 +1,4 @@
-import type { AnnictWork, AnnictSeries } from "../types.js";
+import type { AnnictWork, AnnictSeries } from "../types/index.js";
 
 const listToText = <T>(
   items: T[],

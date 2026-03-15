@@ -4,7 +4,7 @@ import {
   SearchAnimeInputSchema,
   SearchAnimeBySeasonInputSchema,
   GetAnimeByIdsInputSchema,
-} from "../types.js";
+} from "../types/index.js";
 import { worksToText } from "../utils/format.js";
 import { wrap } from "../utils/result.js";
 

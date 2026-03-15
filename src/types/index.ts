@@ -1,5 +1,5 @@
 /**
- * Annict API types & MCP tool input schemas (Zod)
+ * Annict API response types & MCP tool input schemas (Zod)
  * @see https://developers.annict.com/docs/rest-api/v1/works
  * @see https://developers.annict.com/docs/rest-api/v1/series
  */
