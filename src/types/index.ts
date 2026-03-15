@@ -1,12 +1,6 @@
-/**
- * Annict API response types & MCP tool input schemas (Zod)
- * @see https://developers.annict.com/docs/rest-api/v1/works
- * @see https://developers.annict.com/docs/rest-api/v1/series
- */
 import { z } from "zod";
 
-// --- API response types ---
-
+/** 作品の画像URL情報（GET /v1/works の images フィールド） */
 export interface AnnictWorkImages {
   recommended_url?: string;
   facebook?: { og_image_url?: string };
@@ -19,6 +13,7 @@ export interface AnnictWorkImages {
   };
 }
 
+/** 作品 1 件（GET /v1/works の work 要素） */
 export interface AnnictWork {
   id: number;
   title: string;
@@ -42,6 +37,7 @@ export interface AnnictWork {
   no_episodes?: boolean;
 }
 
+/** GET /v1/works のレスポンス本体 */
 export interface AnnictWorksResponse {
   works: AnnictWork[];
   total_count: number;
@@ -49,6 +45,7 @@ export interface AnnictWorksResponse {
   prev_page: number | null;
 }
 
+/** シリーズ 1 件（GET /v1/series の series 要素） */
 export interface AnnictSeries {
   id: number;
   name: string;
@@ -56,6 +53,7 @@ export interface AnnictSeries {
   name_en?: string;
 }
 
+/** GET /v1/series のレスポンス本体 */
 export interface AnnictSeriesResponse {
   series: AnnictSeries[];
   total_count: number;
@@ -65,18 +63,24 @@ export interface AnnictSeriesResponse {
 
 // --- Common schemas ---
 
+/** クール名（春・夏・秋・冬・通年）の Zod enum */
 export const SeasonName = z.enum(["spring", "summer", "autumn", "winter", "all"]);
 export type SeasonName = z.infer<typeof SeasonName>;
 
+/** 作品一覧のソート指定の Zod enum */
 export const SeasonSort = z.enum(["watchers_desc", "watchers_asc", "season_desc", "season_asc"]);
 export type SeasonSort = z.infer<typeof SeasonSort>;
 
+/** 1 ページあたりの件数（1〜50、デフォルト 25） */
 const PER_PAGE = z.number().min(1).max(50).optional().default(25).describe("Results per page (max 50)");
+/** ページ番号（1 以上） */
 const PAGE = z.number().min(1).optional().describe("Page number");
+/** 作品ID または シリーズID の配列（1〜50 件） */
 const IDS = z.array(z.number().int().positive()).min(1).max(50);
 
 // --- Tool input schemas ---
 
+/** search_anime ツールの入力スキーマ（タイトル検索） */
 export const SearchAnimeInputSchema = z.object({
   title: z.string().min(1).describe("Search by title (e.g. shirobako, しろばこ)"),
   per_page: PER_PAGE,
@@ -84,6 +88,7 @@ export const SearchAnimeInputSchema = z.object({
 });
 export type SearchAnimeInput = z.infer<typeof SearchAnimeInputSchema>;
 
+/** search_anime_by_season ツールの入力スキーマ（クール検索） */
 export const SearchAnimeBySeasonInputSchema = z.object({
   year: z.number().int().min(2000).max(2030).describe("Year (e.g. 2024)"),
   season: SeasonName.describe("Season: spring, summer, autumn, winter, or all"),
@@ -93,11 +98,13 @@ export const SearchAnimeBySeasonInputSchema = z.object({
 });
 export type SearchAnimeBySeasonInput = z.infer<typeof SearchAnimeBySeasonInputSchema>;
 
+/** get_anime_by_ids ツールの入力スキーマ（作品ID指定） */
 export const GetAnimeByIdsInputSchema = z.object({
   ids: IDS.describe("Annict work IDs (e.g. [4168, 4681])"),
 });
 export type GetAnimeByIdsInput = z.infer<typeof GetAnimeByIdsInputSchema>;
 
+/** search_series ツールの入力スキーマ（シリーズ名検索） */
 export const SearchSeriesInputSchema = z.object({
   name: z.string().min(1).describe("Search by series name (e.g. ソードアート, Sword Art)"),
   per_page: PER_PAGE,
@@ -106,6 +113,7 @@ export const SearchSeriesInputSchema = z.object({
 });
 export type SearchSeriesInput = z.infer<typeof SearchSeriesInputSchema>;
 
+/** get_series_by_ids ツールの入力スキーマ（シリーズID指定） */
 export const GetSeriesByIdsInputSchema = z.object({
   ids: IDS.describe("Annict series IDs (e.g. [65])"),
 });

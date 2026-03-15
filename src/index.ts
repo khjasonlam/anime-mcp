@@ -6,6 +6,7 @@ import { registerTools } from "@/tools/index.js";
 const server = new McpServer({ name: "anime-mcp", version: "1.0.0" });
 registerTools(server);
 
+/** MCP サーバーを stdio で起動する */
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);

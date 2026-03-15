@@ -4,6 +4,7 @@ import { SearchSeriesInputSchema, GetSeriesByIdsInputSchema } from "@/types/inde
 import { seriesToText } from "@/utils/format.js";
 import { wrap } from "@/utils/result.js";
 
+/** シリーズ検索用の MCP ツール（search_series, get_series_by_ids）を登録する */
 export const registerSeriesTools = (server: McpServer) => {
   server.registerTool(
     "search_series",
