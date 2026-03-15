@@ -1,6 +1,6 @@
 # Anime MCP Server
 
-Annict REST API（[作品](https://developers.annict.com/docs/rest-api/v1/works)・[シリーズ](https://developers.annict.com/docs/rest-api/v1/series)）を使い、アニメの検索を行う [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) サーバーです。
+Annict REST API（[作品](https://developers.annict.com/docs/rest-api/v1/works)・[シリーズ](https://developers.annict.com/docs/rest-api/v1/series)・[エピソード](https://developers.annict.com/docs/rest-api/v1/episodes)）を使い、アニメの検索を行う [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) サーバーです。
 
 ## 必要なもの
 
@@ -41,6 +41,13 @@ npm run build
 | `search_series` | シリーズ名で検索（例: ソードアート, Sword Art） |
 | `get_series_by_ids` | シリーズIDのリストでシリーズ情報を取得 |
 
+### エピソード（episodes）
+
+| ツール名 | 説明 |
+|----------|------|
+| `get_episodes_by_work_id` | 作品IDに紐づくエピソード一覧を取得（話数順など） |
+| `get_episodes_by_ids` | エピソードIDのリストでエピソード情報を取得 |
+
 ## Cursor / Claude Desktop での使い方
 
 MCP サーバーとして登録します。
@@ -67,7 +74,7 @@ MCP サーバーとして登録します。
 
 ```
 src/
-├── api/annict.ts    # Annict API (works / series)
+├── api/annict.ts    # Annict API (works / series / episodes)
 ├── config.ts        # 環境変数・定数
 ├── index.ts         # エントリ (MCP サーバー起動)
 ├── types/
@@ -76,9 +83,10 @@ src/
 ├── tools/           # MCP ツール登録
 │   ├── index.ts
 │   ├── works.ts     # 作品ツール
-│   └── series.ts    # シリーズツール
+│   ├── series.ts    # シリーズツール
+│   └── episodes.ts  # エピソードツール
 └── utils/
-    ├── format.ts    # 作品・シリーズのテキスト整形
+    ├── format.ts    # 作品・シリーズ・エピソードのテキスト整形
     └── result.ts    # ツール返却用 (ok / err / wrap)
 ```
 
@@ -98,5 +106,6 @@ npm run format:check # フォーマットチェック
 
 - [Annict REST API - 作品](https://developers.annict.com/docs/rest-api/v1/works)
 - [Annict REST API - シリーズ](https://developers.annict.com/docs/rest-api/v1/series)
+- [Annict REST API - エピソード](https://developers.annict.com/docs/rest-api/v1/episodes)
 - [MCP - Server concepts](https://modelcontextprotocol.io/docs/learn/server-concepts)
 - [MCP - Build a server (TypeScript)](https://modelcontextprotocol.io/docs/develop/build-server#typescript)

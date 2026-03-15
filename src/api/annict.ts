@@ -1,6 +1,6 @@
 import { getAnnictAccessToken, ANNICT_API_BASE } from "@/config.js";
-import type { ApiParams, FetchWorksParams, FetchSeriesParams } from "@/types/api.js";
-import type { AnnictWorksResponse, AnnictSeriesResponse } from "@/types/index.js";
+import type { ApiParams, FetchWorksParams, FetchSeriesParams, FetchEpisodesParams } from "@/types/api.js";
+import type { AnnictWorksResponse, AnnictSeriesResponse, AnnictEpisodesResponse } from "@/types/index.js";
 
 /** クエリ用オブジェクトを URLSearchParams に変換する（配列はカンマ区切り） */
 const buildParams = (params: ApiParams): URLSearchParams => {
@@ -33,6 +33,10 @@ export const fetchWorks = (params: FetchWorksParams = {}): Promise<AnnictWorksRe
 /** GET /v1/series でシリーズ一覧を取得する */
 export const fetchSeries = (params: FetchSeriesParams = {}): Promise<AnnictSeriesResponse> =>
   get<AnnictSeriesResponse>("series", params);
+
+/** GET /v1/episodes でエピソード一覧を取得する */
+export const fetchEpisodes = (params: FetchEpisodesParams = {}): Promise<AnnictEpisodesResponse> =>
+  get<AnnictEpisodesResponse>("episodes", params);
 
 /** クール指定用の文字列を組み立てる（例: 2016-spring, 2024-all） */
 export const seasonParam = (year: number, season: string): string => {

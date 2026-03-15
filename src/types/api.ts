@@ -2,6 +2,7 @@
  * Annict API request params (query string building)
  * @see https://developers.annict.com/docs/rest-api/v1/works
  * @see https://developers.annict.com/docs/rest-api/v1/series
+ * @see https://developers.annict.com/docs/rest-api/v1/episodes
  */
 
 /** クエリ文字列組み立て用のパラメータ型（undefined は除外して付与） */
@@ -27,5 +28,16 @@ export interface FetchSeriesParams extends ApiParams {
   page?: number;
   per_page?: number;
   sort_id?: "asc" | "desc";
+  fields?: string[];
+}
+
+/** GET /v1/episodes のクエリパラメータ */
+export interface FetchEpisodesParams extends ApiParams {
+  filter_ids?: number[];
+  filter_work_id?: number;
+  page?: number;
+  per_page?: number;
+  sort_id?: "asc" | "desc";
+  sort_sort_number?: "asc" | "desc";
   fields?: string[];
 }
