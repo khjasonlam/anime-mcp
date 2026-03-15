@@ -1,4 +1,4 @@
-name: CI
+name: Lint, Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main, master]
 
 jobs:
-  ci:
+  lint-build-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
